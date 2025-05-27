@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Employee;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
 
 class HomeController extends Controller
 {
@@ -23,6 +26,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $employees = Employee::all();
+
+        $maleCount = Employee::where('gender', 'Male')->count();
+        $femaleCount = Employee::where('gender', 'Female')->count();
+
+        $averageAge = Employee::selectRaw('AVG(DATEDIFF(CURDATE(), birth_date) / 365) as average_age')->value('average_age');
+        $averageAge = round($averageAge, 0);
+
+        $totalSalary = Employee::sum('salary');
+
+        return view('home', compact('employees', 'maleCount', 'femaleCount', 'averageAge', 'totalSalary'));
     }
+
 }

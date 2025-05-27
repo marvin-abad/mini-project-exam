@@ -13,7 +13,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Employees') }}</div>
+                <div class="card-header">{{ __('Employees') }}<a href="{{ route('home') }}" class="btn btn-secondary float-end">Back to Home</a></div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -35,7 +35,6 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
                                         <th>Last Name</th>
                                         <th>First Name</th>
                                         <th>Gender</th>
@@ -46,11 +45,10 @@
                                 <tbody>
                                     @foreach ($employees as $employee)
                                         <tr>
-                                            <td>{{ $employee->id }} </td>
                                             <td>{{ $employee->first_name }}</td>
                                             <td>{{ $employee->last_name }}</td>
                                             <td>{{ $employee->gender }}</td>
-                                            <td>{{ $employee->salary }}</td>
+                                            <td>₱ {{ $employee->salary }}</td>
                                             <td>
                                                 <a href="{{ route('employees.edit', ['employee' => $employee]) }}" class="btn btn-primary">Edit</a>
                                                 <form action="{{ route('employees.destroy', ['employee' => $employee]) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this employee?');" class="d-inline">

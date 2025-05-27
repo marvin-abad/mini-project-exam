@@ -17,8 +17,10 @@ class EmployeeController extends Controller
     {
         $employees = Employee::paginate(5);
 
+        $maleCount = Employee::where('gender', 'Male')->count();
+        $femaleCount = Employee::where('gender', 'Female')->count();
 
-        return view('employees.index', compact('employees'));
+        return view('employees.index', compact('employees', 'maleCount', 'femaleCount'));
     }
 
     public function create()
