@@ -2,6 +2,13 @@
 
 @section('content')
 
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+
+    </div>
+@endif
+
 <div class="">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -45,17 +52,21 @@
                                             <td>{{ $employee->gender }}</td>
                                             <td>{{ $employee->salary }}</td>
                                             <td>
-                                                <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-primary">Edit</a>
-                                                {{-- <form action="{{ route('employees.destroy ', $employee->id) }}" method="POST" style="display:inline;">
+                                                <a href="{{ route('employees.edit', ['employee' => $employee]) }}" class="btn btn-primary">Edit</a>
+                                                <form action="{{ route('employees.destroy', ['employee' => $employee]) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this employee?');" class="d-inline">
                                                     @csrf
-                                                    <input type="hidden" name="id" value="{{ $employee->id }}">
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </form> --}}
+                                                    @method('delete')
+                                                    <input class="btn btn-danger" type="submit" value="Delete">
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+
+                            <div class="mt-4">
+                                {{ $employees->links() }}
+                            </div>
                         </div>
                     </div>
                 </div>

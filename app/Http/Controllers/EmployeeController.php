@@ -15,7 +15,9 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::all();
+        $employees = Employee::paginate(5);
+
+
         return view('employees.index', compact('employees'));
     }
 
@@ -48,18 +50,34 @@ class EmployeeController extends Controller
         //
     }
 
-    public function edit($id)
+    public function edit(Employee $employee)
     {
-        //
+        // Return the view for editing an existing employee
+        return view('employees.edit', compact('employee'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Employee $employee, Request $request)
     {
-        //
+        // validation of data requested
+        $data = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'gender' => 'required|in:Male,Female',
+            'birth_date' => 'required|date',
+            'salary' => 'required|numeric|min:0',
+        ]);
+
+        // Update the employee record
+        $employee->update($data);
+
+        // Redirect to the employees index with a success message
+        return redirect()->route('employees.index')->with('success', 'Employee updated successfully!');
     }
 
     public function destroy($id)
     {
-        //
+        $employee = Employee::findOrFail($id);
+        $employee->delete();
+        return redirect()->route('employees.index')->with('success', 'Employee deleted successfully!');
     }
 }

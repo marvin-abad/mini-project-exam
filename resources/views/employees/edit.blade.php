@@ -1,14 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-@if ($errors->any())
-    <div class="alert alert-danger">
-        @foreach ($errors->all() as $error)
-            <span class="text-danger">{{ $error }}</span>
-        @endforeach
-    </div>
-@endif
-
 
 <div class="container">
     <div class="row justify-content-center">
@@ -18,35 +10,35 @@
                     <a href="{{ route('employees.index') }}" class="btn btn-secondary float-end">Back to Employee List</a>
                 </div>
 
-                <form action={{ route('employees.store') }} method="post" class="card-body">
+                <form action={{ route('employees.update', ['employee' => $employee]) }}  method="post" class="card-body">
                     @csrf
-                    @method('post')
+                    @method('put')
                     <div>
                         <div class="card-body">
                             <div class="mb-3">
                                 <label for="name" class="form-label">First Name</label>
-                                <input type="text" class="form-control" id="first_name" name="first_name" required>
+                                <input type="text" class="form-control" id="first_name" name="first_name" value={{ $employee -> first_name }} required>
                             </div>
                             <div class="mb-3">
                                 <label for="name" class="form-label">Last Name</label>
-                                <input type="text" class="form-control" id="last_name" name="last_name" required>
+                                <input type="text" class="form-control" id="last_name" name="last_name" value={{ $employee -> last_name }} required>
                             </div>
                             <div class="mb-3">
                                 <label for="name" class="form-label">Gender</label>
-                                <input type="text" class="form-control" id="gender" name="gender" required>
+                                <input type="text" class="form-control" id="gender" name="gender" value={{ $employee -> gender }} required>
                             </div>
                             <div class="mb-3">
                                 <label for="name" class="form-label">Birthday</label>
-                                <input type="date" class="form-control" id="birth_date" name="birth_date" required>
+                                <input type="date" class="form-control" id="birth_date" name="birth_date" value={{ $employee -> birth_date }} required>
                             </div>
                             <div class="mb-3">
                                 <label for="name" class="form-label">Salaray</label>
-                                <input type="text" class="form-control" id="salary" name="salary" required>
+                                <input type="text" class="form-control" id="salary" name="salary" value={{ $employee -> salary }} required>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Create Employee</button>
+                        <button type="submit" class="btn btn-primary">Update Employee</button>
                     </div>
                 </form>
             </div>

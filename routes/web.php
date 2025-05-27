@@ -28,6 +28,8 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
     Route::get('/employees/create', [EmployeeController::class, 'create'])->name('employees.create');
     Route::post('/employees', [EmployeeController::class, 'store'])->name('employees.store');
-    Route::post('/employees/{id}', [EmployeeController::class, 'destroy'])->name('employees.destroy');
+    Route::get('/employees/{employee}/edit', [EmployeeController::class, 'edit'])->name('employees.edit');
+    Route::put('/employees/{employee}/update', [EmployeeController::class, 'update'])->name('employees.update');
+    Route::delete('/employees/{employee}/destroy', [EmployeeController::class, 'destroy'])->name('employees.destroy');
 });
 
